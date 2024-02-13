@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -59,6 +62,23 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    // Ktor
+    implementation("io.ktor:ktor-client-android:2.3.7")
+    implementation("io.ktor:ktor-client-serialization:2.3.7")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
+    implementation("io.ktor:ktor-client-logging-jvm:2.3.7")
+    implementation("io.ktor:ktor-client-content-negotiation:2.3.7")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.7")
+    implementation("io.ktor:ktor-client-mock-jvm:2.3.7")
+    // Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.50")
+    implementation("androidx.test.ext:junit-ktx:1.1.5")
+    kapt("com.google.dagger:hilt-compiler:2.50")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
