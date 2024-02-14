@@ -1,4 +1,4 @@
-package com.econocom.gigirestaurants
+package com.econocom.gigirestaurants.viewmodel
 
 import android.app.Application
 import androidx.compose.runtime.collectAsState
@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.econocom.gigirestaurants.database.daos.FavoritosDao
 import com.econocom.gigirestaurants.database.entities.Favorito
 import com.econocom.gigirestaurants.model.network.DataDownloader
+import com.econocom.gigirestaurants.model.network.apis.DetallesApi
 import com.econocom.gigirestaurants.model.network.apis.RestaurantApi
 import com.econocom.gigirestaurants.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,10 +28,6 @@ class AppViewModel @Inject constructor(
     private val _listaRestaurants = MutableStateFlow<List<RestaurantApi>>(emptyList())
     val listaRestaurants = _listaRestaurants.asStateFlow()
 
-    // Restaurant seleccionado
-    private val _restaurant = MutableStateFlow(RestaurantApi())
-    val restaurant = _restaurant.asStateFlow()
-
     // Texto ingresado por el usuario
     private val _textoBusqueda = MutableStateFlow("")
     val textoBusqueda = _textoBusqueda.asStateFlow()
@@ -46,6 +43,9 @@ class AppViewModel @Inject constructor(
     private val _buscando = MutableStateFlow(false)
     val buscando = _buscando.asStateFlow()
 
+    private val _detalles = MutableStateFlow(DetallesApi())
+    val detalles = _detalles.asStateFlow()
+
     init {
         viewModelScope.launch {
             dataDownloader.downloadRestaurant(latLong = ubicacion.value).collect {
@@ -54,7 +54,14 @@ class AppViewModel @Inject constructor(
         }
     }
 
-    fun setRestaurant(restaurant: RestaurantApi) { _restaurant.value = restaurant }
+    fun downloadDetalles(locationId: Int) {
+        viewModelScope.launch {
+            dataDownloader.downloadDetalles(locationId = locationId).collect {
+                _detalles.value = it
+            }
+        }
+    }
+
     fun setTextoBusqueda(texto: String) { _textoBusqueda.value = texto }
     fun insertFavorito(favorito: Favorito) { repository.insertFavorito(favorito, viewModelScope) }
     fun deleteFavorito(favorito: Favorito) { repository.deleteFavorito(favorito, viewModelScope) }

@@ -18,7 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.econocom.gigirestaurants.AppViewModel
+import com.econocom.gigirestaurants.viewmodel.AppViewModel
 import com.econocom.gigirestaurants.database.entities.Favorito
 
 @OptIn(ExperimentalMaterial3Api::class)

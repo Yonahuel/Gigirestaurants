@@ -32,15 +32,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.UiComposable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.econocom.gigirestaurants.AppViewModel
+import com.econocom.gigirestaurants.viewmodel.AppViewModel
 import com.econocom.gigirestaurants.model.network.apis.RestaurantApi
+import com.econocom.gigirestaurants.ui.navigation.Screen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: AppViewModel
+    viewModel: AppViewModel,
+    navController: NavController
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
@@ -56,12 +59,15 @@ fun HomeScreen(
             )
         }
     ) {
-        TabScreen(viewModel)
+        TabScreen(viewModel, navController)
     }
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ListaRestaurants(viewModel: AppViewModel) {
+fun ListaRestaurants(
+    viewModel: AppViewModel,
+    navController: NavController
+) {
     val lista by viewModel.listaRestaurants.collectAsState()
     val query by viewModel.textoBusqueda.collectAsState()
     val buscando by viewModel.buscando.collectAsState()
@@ -79,14 +85,17 @@ fun ListaRestaurants(viewModel: AppViewModel) {
         }
         LazyColumn(modifier = Modifier.fillMaxWidth()) {
             items(lista) {restaurant ->
-                RestaurantItem(restaurant = restaurant, viewModel = viewModel)
+                RestaurantItem(restaurant = restaurant, viewModel = viewModel, navController = navController)
             }
         }
     }
 }
 
 @Composable
-fun TabScreen(viewModel: AppViewModel) {
+fun TabScreen(
+    viewModel: AppViewModel,
+    navController: NavController
+    ) {
     var tabIndex by remember { mutableStateOf(0) }
     val tabs = listOf("Home", "Detalles")
 
@@ -101,7 +110,7 @@ fun TabScreen(viewModel: AppViewModel) {
             }
         }
         when (tabIndex) {
-            0 -> ListaRestaurants(viewModel)
+            0 -> ListaRestaurants(viewModel, navController)
             1 -> FavoritosScreen(viewModel)
         }
     }
@@ -129,13 +138,15 @@ fun TabRow(
 @Composable
 fun RestaurantItem(
     restaurant: RestaurantApi,
-    viewModel: AppViewModel
+    viewModel: AppViewModel,
+    navController: NavController
 ) {
 
     Card(
         modifier = Modifier
             .clickable {
-                viewModel.setRestaurant(restaurant)
+                viewModel.downloadDetalles(restaurant.locationId!!)
+                navController.navigate(Screen.Detalles.name)
             }
     ) {
         Row {
