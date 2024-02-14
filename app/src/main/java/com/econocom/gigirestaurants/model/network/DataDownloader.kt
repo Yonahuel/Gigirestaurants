@@ -1,6 +1,7 @@
 package com.econocom.gigirestaurants.model.network
 
 import android.util.Log
+import com.econocom.gigirestaurants.model.network.apis.DetallesApi
 import com.econocom.gigirestaurants.model.network.apis.RestaurantApi
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ClientRequestException
@@ -15,7 +16,7 @@ import kotlinx.serialization.json.Json
 
 class DataDownloader {
     private val tag = "DataDownloader - Error en la solicitud: "
-    private val url = "https://api.content.tripadvisor.com/api/v1/location/nearby_search?"
+    private val url = "https://api.content.tripadvisor.com/api/v1/location/"
     private val idioma = "es_MX"
     private val apiKey = ""
 
@@ -26,8 +27,8 @@ class DataDownloader {
     ): Flow<List<RestaurantApi>> {
         val data = MutableStateFlow<List<RestaurantApi>>(emptyList())
         try {
-            val httpResponse = httpClient.get { url(
-                "${baseUrl}latLong=${latLong}&key=${apiKey}&category=restaurants&language=${idioma}")
+            val httpResponse = httpClient.get {
+                url("${baseUrl}nearby_search?latLong=${latLong}&key=${apiKey}&category=restaurants&language=${idioma}")
             }
             if (httpResponse.status.isSuccess()) {
                 val responseContent = httpResponse.bodyAsText()
@@ -48,5 +49,18 @@ class DataDownloader {
             Log.d(tag, "Error desconocido: ${e.message}")
         }
         return data
+    }
+
+    suspend fun downloadDetalles(
+        httpClient: HttpClient = ktorHttpClient,
+        baseUrl: String = url,
+        locationId: Int
+    ): Flow<DetallesApi> {
+        val data = MutableStateFlow<DetallesApi>(DetallesApi())
+        try {
+            val httpResponse = httpClient.get {
+                url ( "${baseUrl}${locationId}/details?key=${apiKey}&language=${idioma}&currency=USD")
+            }
+        }
     }
 }

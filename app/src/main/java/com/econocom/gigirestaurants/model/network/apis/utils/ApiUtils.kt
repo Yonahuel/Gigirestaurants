@@ -39,3 +39,10 @@ data class RankingData(
     val rankingOutOf: Int,
     val ranking: Int
 )
+
+@Serializable
+data class Error(
+    val message: String,
+    val type: String,
+    val code: Int
+)
