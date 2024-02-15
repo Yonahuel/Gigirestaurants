@@ -6,19 +6,19 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.econocom.gigirestaurants.database.entities.Favorito
+import com.econocom.gigirestaurants.database.entities.Restaurant
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface FavoritosDao {
-    @Query("SELECT * FROM Favorito")
-    fun getAllFlow(): Flow<List<Favorito>>
+interface RestaurantDao {
+    @Query("SELECT * FROM Restaurant")
+    fun getAllFlow(): Flow<List<Restaurant>>
     @Update
-    fun update(favorito: Favorito)
+    fun update(favorito: Restaurant)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(favorito: Favorito)
+    fun insert(favorito: Restaurant)
 
     @Delete
-    fun delete(favorito: Favorito)
+    fun delete(favorito: Restaurant)
 }

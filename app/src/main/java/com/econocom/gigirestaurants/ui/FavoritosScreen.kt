@@ -18,8 +18,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import com.econocom.gigirestaurants.database.entities.Restaurant
 import com.econocom.gigirestaurants.viewmodel.AppViewModel
-import com.econocom.gigirestaurants.database.entities.Favorito
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -52,7 +52,8 @@ fun FavoritosScreen(
 @Composable
 fun Item(
     viewModel: AppViewModel,
-    restaurant: Favorito) {
+    restaurant: Restaurant
+) {
     Row {
         Text(
             text = "Nombre"

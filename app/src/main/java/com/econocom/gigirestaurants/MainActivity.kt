@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    App(viewModel)
+                    MainApp(viewModel)
                 }
             }
         }
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun App(viewModel: AppViewModel) {
+fun MainApp(viewModel: AppViewModel) {
     val navController = rememberNavController()
 
     GigirestaurantsTheme {

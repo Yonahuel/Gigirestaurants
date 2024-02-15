@@ -1,7 +1,7 @@
 package com.econocom.gigirestaurants.di
 
 import com.econocom.gigirestaurants.database.AppDatabase
-import com.econocom.gigirestaurants.database.daos.FavoritosDao
+import com.econocom.gigirestaurants.database.daos.RestaurantDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,5 +13,5 @@ import javax.inject.Singleton
 class DaoModule {
     @Provides
     @Singleton
-    fun provideDao(appDatabase: AppDatabase): FavoritosDao { return appDatabase.favoritosDao() }
+    fun provideDao(appDatabase: AppDatabase): RestaurantDao { return appDatabase.favoritosDao() }
 }
