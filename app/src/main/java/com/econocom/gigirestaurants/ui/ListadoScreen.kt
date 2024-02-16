@@ -28,8 +28,6 @@ import com.econocom.gigirestaurants.ui.theme.AppColors
 import com.econocom.gigirestaurants.ui.utils.BarraBusqueda
 import com.econocom.gigirestaurants.viewmodel.AppViewModel
 import java.text.DecimalFormat
-import kotlin.math.roundToInt
-import kotlin.math.roundToLong
 
 @Composable
 fun ListaRestaurants(
