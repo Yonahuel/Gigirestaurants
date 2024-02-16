@@ -71,7 +71,7 @@ fun DetallesScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = detallesFake.name!!) }, // Reemplazar por detalles.name
+                title = { Text(text = detalles.name ?: "") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = AppColors.Primary,
                     titleContentColor = AppColors.OnPrimary
@@ -88,7 +88,7 @@ fun DetallesScreen(
                 }
             )
         },
-        content = { DetallesCard(detallesFake, viewModel) } // Reemplazar por detalles
+        content = { DetallesCard(detalles, viewModel) }
     )
 }
 

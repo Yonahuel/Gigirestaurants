@@ -25,7 +25,7 @@ import coil.compose.AsyncImage
 import com.econocom.gigirestaurants.model.network.apis.RestaurantApi
 import com.econocom.gigirestaurants.ui.navigation.Screen
 import com.econocom.gigirestaurants.ui.theme.AppColors
-import com.econocom.gigirestaurants.ui.utils.BarraBusqueda2
+import com.econocom.gigirestaurants.ui.utils.BarraBusqueda
 import com.econocom.gigirestaurants.viewmodel.AppViewModel
 
 @Composable
@@ -39,7 +39,7 @@ fun ListaRestaurants(
             .background(AppColors.Background)
             .padding(top = 8.dp)
     ) {
-        BarraBusqueda2(viewModel = viewModel, navController = navController)
+        BarraBusqueda(viewModel = viewModel, navController = navController)
     }
 }
 

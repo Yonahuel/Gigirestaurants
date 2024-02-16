@@ -4,6 +4,7 @@ import com.econocom.gigirestaurants.database.entities.Restaurant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import com.econocom.gigirestaurants.model.network.apis.utils.Address
+import com.econocom.gigirestaurants.model.network.apis.utils.Error
 
 
 @Serializable
@@ -28,3 +29,9 @@ data class RestaurantApi(
         return restaurant
     }
 }
+
+@Serializable
+data class RestaurantResponse(
+    val data: List<RestaurantApi>? = null,
+    val error: Error? = null
+)

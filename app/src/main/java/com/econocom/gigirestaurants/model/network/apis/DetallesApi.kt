@@ -16,5 +16,5 @@ data class DetallesApi(
     val address: Address? = null,
     val email: String? = null,
     val phone: String? = null,
-    val rating: Int? = null
+    val rating: Double? = null
 )

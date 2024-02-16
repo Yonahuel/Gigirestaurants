@@ -88,5 +88,5 @@ val detallesFake = DetallesApi(
     ),
     email = "restaurant@restaurant.com",
     phone = "+54 9 1155658963",
-    rating = 4
+    rating = 4.0
 )

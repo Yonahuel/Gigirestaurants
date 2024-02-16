@@ -30,13 +30,12 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.econocom.gigirestaurants.fakes.listaFakes
 import com.econocom.gigirestaurants.ui.RestaurantItem
 import com.econocom.gigirestaurants.ui.theme.AppColors
 import com.econocom.gigirestaurants.viewmodel.AppViewModel
 
 @Composable
-fun BarraBusqueda2(
+fun BarraBusqueda(
     modifier: Modifier = Modifier,
     viewModel: AppViewModel,
     navController: NavController
@@ -94,7 +93,7 @@ fun BarraBusqueda2(
                 modifier = Modifier.fillMaxSize()
             ) {
                 LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                    items(listaFakes) { restaurant -> // Reemplazar listaFakes por restaurants
+                    items(restaurants) { restaurant ->
                         RestaurantItem(
                             restaurant = restaurant,
                             viewModel = viewModel,

@@ -5,6 +5,7 @@ import com.econocom.gigirestaurants.BuildConfig
 import com.econocom.gigirestaurants.model.location.LocationService
 import com.econocom.gigirestaurants.model.network.apis.DetallesApi
 import com.econocom.gigirestaurants.model.network.apis.RestaurantApi
+import com.econocom.gigirestaurants.model.network.apis.RestaurantResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
@@ -36,13 +37,15 @@ class DataDownloader {
         val data = MutableStateFlow<List<RestaurantApi>>(emptyList())
         try {
             val httpResponse = httpClient.get {
-                url("${baseUrl}nearby_search?latLong=${latLong}&key=${apiKey}&category=restaurants&language=${mIdioma}")
+                url("${baseUrl}nearby_search?latLong=${latLongFake}&key=${apiKey}&category=restaurants&language=${mIdioma}")
             }
             if (httpResponse.status.isSuccess()) {
                 val responseContent = httpResponse.bodyAsText()
                 if (responseContent.isNotEmpty()) {
-                    val apiResponse = Json.decodeFromString<List<RestaurantApi>>(responseContent)
-                    data.value = apiResponse
+                    val apiResponse = Json.decodeFromString<RestaurantResponse>(responseContent)
+                    apiResponse.data?.let {
+                        data.value = it
+                    } ?: Log.d(tag, "La respuesta contiene una lista de datos nula")
                 } else {
                     Log.d(tag, "La respuesta está vacía")
                 }
@@ -72,7 +75,8 @@ class DataDownloader {
             if (httpResponse.status.isSuccess()) {
                 val responseContent = httpResponse.bodyAsText()
                 if (responseContent.isNotEmpty()) {
-                    val apiResponse = Json.decodeFromString<DetallesApi>(responseContent)
+                    val json = Json { ignoreUnknownKeys = true }
+                    val apiResponse = json.decodeFromString<DetallesApi>(responseContent)
                     data.value = apiResponse
                 } else {
                     Log.d(tag, "La respuesta está vacía")
@@ -103,8 +107,10 @@ class DataDownloader {
             if (httpResponse.status.isSuccess()) {
                 val responseContent = httpResponse.bodyAsText()
                 if (responseContent.isNotEmpty()) {
-                    val apiResponse = Json.decodeFromString<List<RestaurantApi>>(responseContent)
-                    data.value = apiResponse
+                    val apiResponse = Json.decodeFromString<RestaurantResponse>(responseContent)
+                    apiResponse.data?.let {
+                        data.value = it
+                    }
                 } else {
                     Log.d(tag, "La respuesta está vacía")
                 }
