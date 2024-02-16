@@ -1,13 +1,13 @@
 package com.econocom.gigirestaurants.model.network
 
 import android.util.Log
+import com.econocom.gigirestaurants.model.location.LocationService
 import com.econocom.gigirestaurants.model.network.apis.DetallesApi
 import com.econocom.gigirestaurants.model.network.apis.RestaurantApi
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.get
-import io.ktor.client.request.headers
 import io.ktor.client.request.url
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.isSuccess
@@ -19,15 +19,16 @@ class DataDownloader {
     private val tag = "DataDownloader - Error en la solicitud: "
     private val url = "https://api.content.tripadvisor.com/api/v1/location/"
     private var mIdioma = "es_MX"
-    private val apiKey = "37F379EAA425434AB57096470A62E076"
+    private val apiKey = System.getenv("TRIP_ADVISOR_API_KEY") ?: System.getProperty("TRIP_ADVISOR_API_KEY")
     private var mMoneda = "USD"
+    private val ubicacion= "${LocationService.lat},${LocationService.long}"
     private val latLongFake = "-34.510566761941426,-58.49109368731272"
 
     fun setMoneda(moneda: String) { mMoneda = moneda }
     fun setIdioma(idioma: String) { mIdioma = idioma }
 
     suspend fun downloadRestaurant(
-        latLong: String = latLongFake,
+        latLong: String = ubicacion,
         httpClient: HttpClient = ktorHttpClient,
         baseUrl: String = url
     ): Flow<List<RestaurantApi>> {
