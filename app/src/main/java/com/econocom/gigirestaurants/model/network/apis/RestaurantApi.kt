@@ -17,7 +17,7 @@ data class RestaurantApi(
     @SerialName("address_obj")
     val addressObj: Address? = null,
 ) {
-    fun aRestaurant(): Restaurant {
+    fun asRestaurant(): Restaurant {
         val restaurant = Restaurant()
         restaurant.locationId = this.locationId
         restaurant.name = this.name

@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.navigation.NavController
+import com.econocom.gigirestaurants.ui.theme.AppColors
 import com.econocom.gigirestaurants.ui.theme.Purple80
 import com.econocom.gigirestaurants.viewmodel.AppViewModel
 
@@ -28,16 +29,6 @@ fun HomeScreen(
     navController: NavController
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    val relaunch by remember { mutableStateOf(false) }
-    val permissionRequest = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions(),
-        onResult = { permissions ->
-            if (!permissions.values.all { it }) {
-            } else {
-                relaunch != relaunch
-            }
-        }
-    )
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -45,33 +36,11 @@ fun HomeScreen(
             CenterAlignedTopAppBar(
                 title = { Text(text = "Gigi Restaurants") },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Purple80
+                    containerColor = AppColors.Primary
                 ),
                 modifier = Modifier.fillMaxWidth(),
             )
         },
         content = { Tabs(viewModel = viewModel, navController = navController)}
     )
-
-    /*
-    LaunchedEffect(key1 = relaunch) {
-        try {
-            //val location = LocationService().getCurrentLocation(context)
-        } catch (e: LocationService.LocationServiceException) {
-            when (e) {
-                is LocationService.LocationServiceException.LocationDisabledException -> { }
-                is LocationService.LocationServiceException.MissingPermissionException -> {
-                    permissionRequest.launch(
-                        arrayOf(
-                            android.Manifest.permission.ACCESS_FINE_LOCATION,
-                            android.Manifest.permission.ACCESS_COARSE_LOCATION
-                        )
-                    )
-                }
-                is LocationService.LocationServiceException.NoNetworkEnabledException -> { }
-                is LocationService.LocationServiceException.UnknownException -> { }
-            }
-        }
-    }
-     */
 }

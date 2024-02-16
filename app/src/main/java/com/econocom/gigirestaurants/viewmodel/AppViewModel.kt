@@ -48,8 +48,11 @@ class AppViewModel @Inject constructor(
     private val _resultadosBusqueda = MutableStateFlow<List<RestaurantApi>>(emptyList())
     val resultadosBusqueda = _resultadosBusqueda.asStateFlow()
 
-    private val _restaurant = MutableStateFlow(RestaurantApi())
+    private val _restaurant = MutableStateFlow(Restaurant())
     val restaurant = _restaurant.asStateFlow()
+
+    private val _ids = MutableStateFlow<List<Int>>(emptyList())
+    val ids = _ids.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -86,5 +89,5 @@ class AppViewModel @Inject constructor(
     fun setTextoBusqueda(texto: String) { _textoBusqueda.value = texto }
     fun insertFavorito(favorito: Restaurant) { repository.insertFavorito(favorito, viewModelScope) }
     fun deleteFavorito(favorito: Restaurant) { repository.deleteFavorito(favorito, viewModelScope) }
-    fun setRestaurant(restaurant: RestaurantApi) { _restaurant.value = restaurant}
+    fun setRestaurant(restaurant: Restaurant) { _restaurant.value = restaurant}
 }

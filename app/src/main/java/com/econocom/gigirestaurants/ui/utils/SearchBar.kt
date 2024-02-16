@@ -23,7 +23,7 @@ fun BarraBusqueda(
 
     SearchBar(
         query = query,
-        onQueryChange = { },
+        onQueryChange =  viewModel::setTextoBusqueda,
         onSearch = { viewModel.searchQuery(query) },
         active = buscando,
         onActiveChange = { }

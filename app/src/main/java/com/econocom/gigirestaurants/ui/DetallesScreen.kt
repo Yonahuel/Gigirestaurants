@@ -59,7 +59,6 @@ fun DetallesScreen(
     viewModel: AppViewModel,
     navController: NavController
 ) {
-    val detalles by viewModel.detalles.collectAsState()
     val favoritos by viewModel.favoritos.collectAsState()
 
     Scaffold(
@@ -93,6 +92,7 @@ fun DetallesCard(
 ) {
     val context = LocalContext.current
     val restaurant by viewModel.restaurant.collectAsState()
+    val ids by viewModel.ids.collectAsState()
 
     Column(
         modifier = Modifier
@@ -144,11 +144,20 @@ fun DetallesCard(
             color = AppColors.OnSurface
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = { viewModel.insertFavorito(restaurant.aRestaurant()) },
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        ) {
-            Text(text = "Agregar a favoritos")
+        if (restaurant.locationId in ids) {
+            Button(
+                onClick = { viewModel.deleteFavorito(restaurant) },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(text = "Quitar de favoritos")
+            }
+        } else {
+            Button(
+                onClick = { viewModel.insertFavorito(restaurant) },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(text = "Agregar a favoritos")
+            }
         }
     }
 }

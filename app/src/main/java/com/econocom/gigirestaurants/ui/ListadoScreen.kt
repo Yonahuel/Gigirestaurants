@@ -30,7 +30,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -114,7 +113,7 @@ fun RestaurantItem(
             .fillMaxWidth()
             .clickable {
                 viewModel.downloadDetalles(restaurant.locationId!!)
-                viewModel.setRestaurant(restaurant)
+                viewModel.setRestaurant(restaurant.asRestaurant())
                 navController.navigate(Screen.Detalles.name)
             }
     ) {

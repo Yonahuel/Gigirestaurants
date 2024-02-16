@@ -13,6 +13,9 @@ import kotlinx.coroutines.flow.Flow
 interface RestaurantDao {
     @Query("SELECT * FROM Restaurant")
     fun getAllFlow(): Flow<List<Restaurant>>
+
+    @Query("SELECT locationId FROM Restaurant")
+    fun getIdsFlow(): Flow<List<Int>>
     @Update
     fun update(favorito: Restaurant)
 

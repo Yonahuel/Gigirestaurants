@@ -32,4 +32,13 @@ class Repository @Inject constructor(
         }
         return result
     }
+
+    suspend fun getIdsFlow(): Flow<List<Int>> {
+        val result = MutableStateFlow<List<Int>>(emptyList())
+
+        dao.getIdsFlow().collect {
+            result.value = it
+        }
+        return result
+    }
 }
