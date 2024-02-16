@@ -27,6 +27,9 @@ import com.econocom.gigirestaurants.ui.navigation.Screen
 import com.econocom.gigirestaurants.ui.theme.AppColors
 import com.econocom.gigirestaurants.ui.utils.BarraBusqueda
 import com.econocom.gigirestaurants.viewmodel.AppViewModel
+import java.text.DecimalFormat
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 @Composable
 fun ListaRestaurants(
@@ -49,6 +52,9 @@ fun RestaurantItem(
     viewModel: AppViewModel,
     navController: NavController
 ) {
+    val distancia = restaurant.distance?.toDouble()
+    val format = DecimalFormat("0.00")
+
     Card(
         modifier = Modifier
             .padding(top = 16.dp)
@@ -80,11 +86,13 @@ fun RestaurantItem(
                     style = MaterialTheme.typography.bodyLarge,
                     color = AppColors.OnSecondary
                 )
-                Text(
-                    text = "Distancia: ${restaurant.distance ?: "null"}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = AppColors.OnSecondary
-                )
+                if (distancia != null) {
+                    Text(
+                        text = "Distancia: ${format.format(distancia)} mi",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = AppColors.OnSecondary
+                    )
+                }
             }
         }
     }
