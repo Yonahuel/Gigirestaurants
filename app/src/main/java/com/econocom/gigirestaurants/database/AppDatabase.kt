@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.econocom.gigirestaurants.MyApplication
 import com.econocom.gigirestaurants.database.daos.RestaurantDao
 import com.econocom.gigirestaurants.database.entities.Restaurant
 

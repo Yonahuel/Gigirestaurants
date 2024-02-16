@@ -27,6 +27,7 @@ class LocationService: Service() {
             applicationContext,
             LocationServices.getFusedLocationProviderClient(applicationContext)
         )
+        start()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -37,7 +38,7 @@ class LocationService: Service() {
         return super.onStartCommand(intent, flags, startId)
     }
 
-    private fun start() {
+    fun start() {
         locationClient
             .getLocationUpdates(10000L)
             .catch { e -> e.printStackTrace() }
@@ -46,6 +47,7 @@ class LocationService: Service() {
                 _long.value = location.longitude
             }
     }
+
     private fun stop() {
         stopSelf()
     }
@@ -54,6 +56,7 @@ class LocationService: Service() {
         super.onDestroy()
         serviceScope.cancel()
     }
+
     companion object {
         const val ACTION_START = "ACTION_START"
         const val ACTION_STOP = "ACTION_STOP"
@@ -62,5 +65,4 @@ class LocationService: Service() {
         private val _long = MutableStateFlow(0.0)
         val long get() = _long.asStateFlow()
     }
-
 }

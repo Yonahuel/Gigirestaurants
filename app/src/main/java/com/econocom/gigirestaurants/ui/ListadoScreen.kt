@@ -51,7 +51,7 @@ fun RestaurantItem(
 ) {
     Card(
         modifier = Modifier
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+            .padding(top = 16.dp)
             .fillMaxWidth()
             .clickable {
                 viewModel.downloadDetalles(restaurant.locationId!!)

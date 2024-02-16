@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AppViewModel @Inject constructor(
+open class AppViewModel @Inject constructor(
     application: Application,
     private val dataDownloader: DataDownloader,
     private val repository: Repository

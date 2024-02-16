@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -45,6 +46,7 @@ fun BarraBusqueda2(
     val resultados by viewModel.resultadosBusqueda.collectAsState()
     val restaurants by viewModel.listaRestaurants.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
+    val textFieldFocusManager = LocalView.current
 
     Column(
         modifier = modifier
@@ -59,9 +61,10 @@ fun BarraBusqueda2(
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(
                 onSearch = {
-                isSearching = !isSearching
-                viewModel.searchQuery(searchText)
-                keyboardController?.hide()
+                    isSearching = !isSearching
+                    viewModel.searchQuery(searchText)
+                    textFieldFocusManager.clearFocus()
+                    keyboardController?.hide()
                 }
             ),
             trailingIcon = {
@@ -69,6 +72,7 @@ fun BarraBusqueda2(
                     IconButton(onClick = {
                         isSearching = !isSearching
                         viewModel.searchQuery(searchText)
+                        textFieldFocusManager.clearFocus()
                         keyboardController?.hide()
                     }) {
                         Icon(imageVector = Icons.Outlined.Search, contentDescription = "Buscar")

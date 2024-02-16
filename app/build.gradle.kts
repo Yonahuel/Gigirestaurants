@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -22,6 +24,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+        buildConfigField("String", "TRIP_ADVISOR_API_KEY", "\"${properties.getProperty("TRIP_ADVISOR_API_KEY")}\"")
     }
 
     buildTypes {
@@ -42,6 +47,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -81,6 +87,7 @@ dependencies {
     // Hilt
     implementation("com.google.dagger:hilt-android:2.50")
     implementation("androidx.test.ext:junit-ktx:1.1.5")
+    androidTestImplementation("org.testng:testng:6.9.6")
     kapt("com.google.dagger:hilt-compiler:2.50")
     // Maps
     implementation("com.google.android.gms:play-services-location:21.1.0")
@@ -99,6 +106,22 @@ dependencies {
     implementation("androidx.security:security-crypto-ktx:1.1.0-alpha06")
     // Coil
     implementation("io.coil-kt:coil-compose:2.5.0")
+
+    // Mockito
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("io.mockk:mockk:1.13.9")
+    testImplementation("io.mockk:mockk-jvm:1.13.9")
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.9.1")
+    testImplementation("org.mockito:mockito-core:5.9.0")
+    testImplementation("io.kotest:kotest-runner-junit5:5.8.0")
+
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("com.google.truth:truth:1.3.0")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    // Test Corrutinas
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    // Espresso
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -24,7 +26,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,6 +44,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -140,13 +145,21 @@ fun DetallesCard(
             text = detalles.email ?: "N/A",
             onClick = { enviarEmail(context, detalles.email!!) }
         )
-        Text(
-            text = "Rating: ${detalles.rating ?: "N/A"}",
-            style = MaterialTheme.typography.headlineMedium,
-            textAlign = TextAlign.Center,
-            fontSize = 16.sp,
-            color = AppColors.OnSurface
-        )
+        Row {
+            Icon(
+                imageVector = Icons.Filled.Star,
+                contentDescription = null,
+                modifier = Modifier.size(30.dp)
+            )
+            Text(
+                text = "Rating: ${detalles.rating ?: "N/A"}",
+                style = MaterialTheme.typography.headlineMedium,
+                textAlign = TextAlign.Center,
+                fontSize = 24.sp,
+                color = AppColors.OnSurface
+            )
+        }
+
         Spacer(modifier = Modifier.height(16.dp))
         if (restaurant.locationId in ids) {
             Button(
@@ -172,27 +185,31 @@ private fun ContactInfoRow(
     text: String,
     onClick: () -> Unit
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(vertical = 4.dp),
-        horizontalArrangement = Arrangement.Center
+    Card(
+        modifier = Modifier.wrapContentSize()
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = AppColors.Primary,
-            modifier = Modifier.size(24.dp)
-        )
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(
-            text = text,
-            style = MaterialTheme.typography.bodyMedium,
-            fontSize = 16.sp,
-            color = AppColors.Primary
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .wrapContentWidth()
+                .clickable(onClick = onClick)
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = AppColors.Primary,
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = text,
+                style = MaterialTheme.typography.bodyMedium,
+                fontSize = 16.sp,
+                color = AppColors.Primary
+            )
+        }
     }
 }
 
