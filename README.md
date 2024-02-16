@@ -29,4 +29,5 @@ Gigirestaurants App es una aplicación que permite visualizar y guardar restaura
 
 1. Clona el repositorio
 2. Abre el proyecto en Android Studio.
-3. En el archivo `local.properties`, asegúrate de cambiar la clave API por tu propia clave proporcionada por TripAdvisor
+3. En el archivo `local.properties`, asegúrate de cambiar la clave API por tu propia clave proporcionada por TripAdvisor, el nombre del campo debe ser TRIP_ADVISOR_API_KEY.
+4. En el archivo secrets.properties se debe alojar el api key de google maps, el nombre del campo debe ser MAPS_API_KEY, si el archivo no se encuentra crealo en el directorio raíz del proyecto.
