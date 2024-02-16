@@ -10,23 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,70 +22,24 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.econocom.gigirestaurants.fakes.listaFakes
 import com.econocom.gigirestaurants.model.network.apis.RestaurantApi
 import com.econocom.gigirestaurants.ui.navigation.Screen
 import com.econocom.gigirestaurants.ui.theme.AppColors
+import com.econocom.gigirestaurants.ui.utils.BarraBusqueda2
 import com.econocom.gigirestaurants.viewmodel.AppViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListaRestaurants(
     viewModel: AppViewModel,
     navController: NavController
 ) {
-    val lista by viewModel.listaRestaurants.collectAsState()
-    val query by viewModel.textoBusqueda.collectAsState()
-    val buscando by viewModel.buscando.collectAsState()
-    val resultados by viewModel.resultadosBusqueda.collectAsState()
-    val mostrarResultados by remember { mutableStateOf(false) }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(AppColors.Background)
             .padding(top = 8.dp)
     ) {
-        SearchBar(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp),
-            query = query,
-            onQueryChange = {},
-            onSearch = { viewModel.searchQuery(query) },
-            active = buscando,
-            onActiveChange = {},
-            placeholder = { Text(text = "Buscar") },
-            trailingIcon = { Icon(imageVector = Icons.Outlined.Search, contentDescription = "Buscar") }
-        ) {
-            if (mostrarResultados) {
-                LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                    items(resultados) { restaurant ->
-                        RestaurantItem(
-                            restaurant = restaurant,
-                            viewModel = viewModel,
-                            navController = navController
-                        )
-                    }
-                }
-            }
-        }
-        if (!mostrarResultados) {
-            Surface(
-                color = AppColors.Background,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                    items(listaFakes) { restaurant ->
-                        RestaurantItem(
-                            restaurant = restaurant,
-                            viewModel = viewModel,
-                            navController = navController
-                        )
-                    }
-                }
-            }
-        }
+        BarraBusqueda2(viewModel = viewModel, navController = navController)
     }
 }
 
@@ -114,6 +56,7 @@ fun RestaurantItem(
             .clickable {
                 viewModel.downloadDetalles(restaurant.locationId!!)
                 viewModel.setRestaurant(restaurant.asRestaurant())
+                viewModel.getIds()
                 navController.navigate(Screen.Detalles.name)
             }
     ) {
@@ -121,6 +64,7 @@ fun RestaurantItem(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(8.dp)
         ) {
+            // Imagen de muestra, reemplazar con url de la imagen provista por la api
             AsyncImage(
                 model = "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 contentDescription = null,

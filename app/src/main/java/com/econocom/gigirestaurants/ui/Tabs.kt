@@ -58,9 +58,8 @@ fun Tabs(
     navController: NavController
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
-    val pagerState = rememberPagerState {
-        tabItems.size
-    }
+    val pagerState = rememberPagerState { tabItems.size }
+
     LaunchedEffect(selectedTabIndex) {
         pagerState.animateScrollToPage(selectedTabIndex)
     }
@@ -106,7 +105,11 @@ fun Tabs(
                 ) {
                     when (index) {
                         0 -> ListaRestaurants(viewModel, navController)
-                        1 -> FavoritosScreen(viewModel)
+
+                        1 -> {
+                            viewModel.getFavoritos()
+                            FavoritosScreen(viewModel, navController)
+                        }
                     }
                 }
         }

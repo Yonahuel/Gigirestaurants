@@ -16,6 +16,7 @@ interface RestaurantDao {
 
     @Query("SELECT locationId FROM Restaurant")
     fun getIdsFlow(): Flow<List<Int>>
+
     @Update
     fun update(favorito: Restaurant)
 

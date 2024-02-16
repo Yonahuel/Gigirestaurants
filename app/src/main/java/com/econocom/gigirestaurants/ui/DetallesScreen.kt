@@ -17,7 +17,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
@@ -59,12 +61,12 @@ fun DetallesScreen(
     viewModel: AppViewModel,
     navController: NavController
 ) {
-    val favoritos by viewModel.favoritos.collectAsState()
+    val detalles by viewModel.detalles.collectAsState()
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = detallesFake.name!!) },
+                title = { Text(text = detallesFake.name!!) }, // Reemplazar por detalles.name
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = AppColors.Primary,
                     titleContentColor = AppColors.OnPrimary
@@ -81,7 +83,7 @@ fun DetallesScreen(
                 }
             )
         },
-        content = { DetallesCard(detallesFake, viewModel) }
+        content = { DetallesCard(detallesFake, viewModel) } // Reemplazar por detalles
     )
 }
 
@@ -97,9 +99,10 @@ fun DetallesCard(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 76.dp),
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 76.dp)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
             modifier = Modifier
@@ -108,6 +111,7 @@ fun DetallesCard(
                 .clip(RoundedCornerShape(16.dp))
                 .background(AppColors.Surface)
         ) {
+            // Imagen de muestra, reemplazar url con dirección de la imagen provista por la api
             SubcomposeAsyncImage(
                 model = "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                 contentDescription = null,

@@ -5,7 +5,6 @@ import com.econocom.gigirestaurants.database.entities.Restaurant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,21 +23,11 @@ class Repository @Inject constructor(
         }
     }
 
-    suspend fun getFavoritos(): Flow<List<Restaurant>> {
-        val result = MutableStateFlow<List<Restaurant>>(emptyList())
-
-        dao.getAllFlow().collect {
-            result.value = it
-        }
-        return result
+    fun getFavoritos(): Flow<List<Restaurant>> {
+        return dao.getAllFlow()
     }
 
-    suspend fun getIdsFlow(): Flow<List<Int>> {
-        val result = MutableStateFlow<List<Int>>(emptyList())
-
-        dao.getIdsFlow().collect {
-            result.value = it
-        }
-        return result
+    fun getIdsFlow(): Flow<List<Int>> {
+        return dao.getIdsFlow()
     }
 }

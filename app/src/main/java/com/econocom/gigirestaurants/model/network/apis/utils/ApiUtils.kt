@@ -19,28 +19,6 @@ data class Address(
 )
 
 @Serializable
-data class Ancestors(
-    val abbrv: String,
-    val level: String,
-    val name: String,
-    @SerialName("location_id")
-    val locationId: Int
-)
-
-@Serializable
-data class RankingData(
-    @SerialName("geo_location_id")
-    val geoLocationId: Int,
-    @SerialName("ranking_string")
-    val rankingString: String,
-    @SerialName("geo_location_name")
-    val geoLocationName: String,
-    @SerialName("ranking_out_of")
-    val rankingOutOf: Int,
-    val ranking: Int
-)
-
-@Serializable
 data class Error(
     val message: String,
     val type: String,
