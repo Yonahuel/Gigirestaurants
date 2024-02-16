@@ -5,17 +5,17 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Address(
-    val street1: String,
-    val street2: String,
-    val city: String,
-    val state: String,
-    val country: String,
-    val postalcode: String,
+    val street1: String? = null,
+    val street2: String? = null,
+    val city: String? = null,
+    val state: String? = null,
+    val country: String? = null,
+    val postalcode: String? = null,
     @SerialName("address_string")
-    val addressString: String,
-    val phone: String,
-    val latitude: Double,
-    val longitude: Double
+    val addressString: String? = null,
+    val phone: String? = null,
+    val latitude: Double? = null,
+    val longitude: Double? = null
 )
 
 @Serializable
@@ -38,4 +38,11 @@ data class RankingData(
     @SerialName("ranking_out_of")
     val rankingOutOf: Int,
     val ranking: Int
+)
+
+@Serializable
+data class Error(
+    val message: String,
+    val type: String,
+    val code: Int
 )

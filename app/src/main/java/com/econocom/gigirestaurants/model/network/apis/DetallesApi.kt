@@ -5,13 +5,16 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Detalles(
+data class DetallesApi(
     @SerialName("location_id")
-    val locationId: Int,
-    val name: String,
-    val description: String,
+    val locationId: Int? = null,
+    val name: String? = null,
+    val description: String? = null,
     @SerialName("web_url")
-    val webUrl: String,
+    val webUrl: String? = null,
     @SerialName("address_obj")
-    val address: Address
+    val address: Address? = null,
+    val email: String? = null,
+    val phone: String? = null,
+    val rating: Int? = null
 )
